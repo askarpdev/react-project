@@ -3,7 +3,7 @@ import { CourseStructure } from "@/types/course";
 
 export async function loadCourseStructure(): Promise<CourseStructure | null> {
   try {
-    // Load from public directory
+    // Load from src directory
     const response = await fetch(
       `/content/${config.projectName}/content/cms/topics.json?_=${Date.now()}`,
     );
@@ -22,9 +22,9 @@ export async function loadCourseStructure(): Promise<CourseStructure | null> {
 
 export async function createProjectStructure() {
   const directories = [
-    `/content/${config.projectName}`,
-    `/content/${config.projectName}/content`,
-    `/content/${config.projectName}/content/cms`,
+    `/${config.projectName}`,
+    `/${config.projectName}/content`,
+    `/${config.projectName}/content/cms`,
   ];
 
   try {

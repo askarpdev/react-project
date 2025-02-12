@@ -1,0 +1,43 @@
+{
+  "title": "Course Overview",
+  "content": {
+    "sections": [
+      {
+        "type": "text",
+        "content": "This course is structured to provide you with a comprehensive understanding of the subject matter through carefully designed modules and practical exercises."
+      },
+      {
+        "type": "list",
+        "title": "What You'll Learn",
+        "items": [
+          "Fundamental concepts and principles",
+          "Practical applications and techniques",
+          "Best practices and industry standards",
+          "Real-world problem solving"
+        ]
+      },
+      {
+        "type": "timeline",
+        "title": "Course Timeline",
+        "items": [
+          {
+            "week": 1,
+            "topic": "Introduction and Basics"
+          },
+          {
+            "week": 2,
+            "topic": "Core Concepts"
+          },
+          {
+            "week": 3,
+            "topic": "Advanced Topics"
+          }
+        ]
+      }
+    ]
+  },
+  "metadata": {
+    "duration": "15 minutes",
+    "difficulty": "Beginner"
+  }
+}

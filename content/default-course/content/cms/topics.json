@@ -30,6 +30,19 @@
           "stranding-description": "All",
           "exceptions": [],
           "strand": ["*"]
+        },
+        {
+          "chapter-readable": "Course Overview 2",
+          "chapter": 2,
+          "file": "test1",
+          "elf-page": 2,
+          "label": "Test",
+          "menuLabel": "Test",
+          "params": "",
+          "strands": "*",
+          "stranding-description": "All",
+          "exceptions": [],
+          "strand": ["*"]
         }
       ]
     },

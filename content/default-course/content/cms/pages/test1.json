@@ -1,0 +1,35 @@
+{
+  "title": "Test Module",
+  "content": {
+    "sections": [
+      {
+        "type": "text",
+        "content": "This is a test module to demonstrate the course content structure and formatting."
+      },
+      {
+        "type": "quiz",
+        "title": "Quick Check",
+        "questions": [
+          {
+            "question": "What is the main purpose of this module?",
+            "options": [
+              "To test knowledge",
+              "To demonstrate structure",
+              "To provide content",
+              "All of the above"
+            ],
+            "correctAnswer": 3
+          }
+        ]
+      },
+      {
+        "type": "note",
+        "content": "This is a sample note section to highlight important information."
+      }
+    ]
+  },
+  "metadata": {
+    "duration": "5 minutes",
+    "difficulty": "Intermediate"
+  }
+}

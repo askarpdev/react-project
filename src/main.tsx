@@ -1,11 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import "./index.css";
+import "./styles/index.scss";
 import { BrowserRouter } from "react-router-dom";
 
 import { TempoDevtools } from "tempo-devtools";
-TempoDevtools.init();
+
+if (import.meta.env.VITE_TEMPO === "true") {
+  TempoDevtools.init();
+}
 
 const basename = import.meta.env.BASE_URL;
 

@@ -71,7 +71,7 @@ export default function Timeline() {
                   key={`${topic.id}-${pageIndex}`}
                   className="p-2 border rounded bg-card hover:bg-accent cursor-pointer"
                 >
-                  {page.menuLabel}
+                  {page.label}
                 </div>
               ))}
             </div>

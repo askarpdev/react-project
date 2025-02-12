@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PageContent from "./PageContent";
 import { loadCourseStructure } from "@/lib/course";
 import { CourseStructure } from "@/types/course";
 import PreviewNavigation from "./PreviewNavigation";
@@ -13,15 +14,21 @@ export default function PreviewWindow() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadCourseStructure()
-      .then((structure) => {
+    const fetchCourseStructure = async () => {
+      try {
+        const structure = await loadCourseStructure();
         if (!structure) {
           throw new Error("Failed to load course structure");
         }
         setCourseStructure(structure);
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourseStructure();
   }, []);
 
   const pages =
@@ -30,8 +37,21 @@ export default function PreviewWindow() {
         id: page.file,
         content: page["chapter-readable"],
         label: page.label,
+        file: page.file,
       })),
     ) || [];
+
+  const handleNext = () => {
+    if (currentPage < pages.length) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handleBack = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -44,19 +64,7 @@ export default function PreviewWindow() {
 
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [currentPage]);
-
-  const handleNext = () => {
-    if (currentPage < pages.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handleBack = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+  }, [pages.length, currentPage]);
 
   if (error) {
     return (
@@ -69,13 +77,19 @@ export default function PreviewWindow() {
     );
   }
 
+  const currentPageFile = pages[currentPage - 1]?.file || "welcome";
+
   return (
-    <div className="min-h-screen bg-background">
-      <div className="h-[calc(100vh-80px)] p-4">
+    <div className="h-full bg-background">
+      <div className="h-[calc(100%-80px)] p-4">
         <div className="h-full overflow-auto">
-          {loading
-            ? "Loading course content..."
-            : pages[currentPage - 1]?.content || "No content available"}
+          {loading ? (
+            <div>Loading course content...</div>
+          ) : pages.length > 0 ? (
+            <PageContent key={currentPageFile} pageFile={currentPageFile} />
+          ) : (
+            <div>No course content available</div>
+          )}
         </div>
       </div>
       <PreviewNavigation

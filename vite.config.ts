@@ -1,4 +1,5 @@
 import path from "path";
+import sass from "sass";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import { tempo } from "tempo-devtools/dist/vite";
@@ -42,9 +43,9 @@ export default defineConfig({
   server: {
     // @ts-ignore
     allowedHosts: true,
-    static: {
-      directory: ".",
-      watch: true,
+    fs: {
+      allow: ["."],
     },
   },
+  publicDir: "content",
 });

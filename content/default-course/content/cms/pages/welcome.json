@@ -1,0 +1,28 @@
+{
+  "title": "Welcome to the Course",
+  "content": {
+    "sections": [
+      {
+        "type": "text",
+        "content": "Welcome to our comprehensive course! We're excited to have you here and look forward to guiding you through this learning journey."
+      },
+      {
+        "type": "text",
+        "content": "In this course, you'll discover new concepts, develop practical skills, and engage with interactive content designed to enhance your learning experience."
+      },
+      {
+        "type": "checklist",
+        "title": "Course Prerequisites",
+        "items": [
+          "Basic understanding of the subject matter",
+          "Access to required software and tools",
+          "Dedication to learning and practicing"
+        ]
+      }
+    ]
+  },
+  "metadata": {
+    "duration": "10 minutes",
+    "difficulty": "Beginner"
+  }
+}
