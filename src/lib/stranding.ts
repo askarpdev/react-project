@@ -124,7 +124,7 @@ if (typeof window !== "undefined") {
   window.dynamo.state.strands = {};
   window.dynamo.state.vars = {};
   // Add StrandingService to global dynamo object
-  window.dynamo.state = StrandingService;
+  window.dynamo.StrandingService = StrandingService;
 }
 
 export { StrandingService };

@@ -15,6 +15,15 @@ import {
 } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import PagePreviewDialog from "./Preview/PagePreviewDialog";
 
 export default function Timeline() {
   const [selectedStrands, setSelectedStrands] = useState<string[]>(() => {
@@ -31,6 +40,7 @@ export default function Timeline() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const prevStructureRef = useRef<string>("");
+  const [selectedPage, setSelectedPage] = useState<string | null>(null);
 
   const fetchCourseStructure = async () => {
     try {
@@ -105,28 +115,54 @@ export default function Timeline() {
           </Select>
         </div>
       </div>
-      <ScrollArea className="h-full p-4">
-        {filteredTopics.map((topic, index) => (
-          <div key={topic.id || index} className="mb-6 border rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="font-semibold">{topic.name}</h3>
-              <Button variant="ghost" size="icon">
-                <ChevronDown className="h-4 w-4" />
-              </Button>
+
+      <ScrollArea className="h-[calc(100%-65px)]">
+        <div className="p-4">
+          {filteredTopics.map((topic) => (
+            <div key={topic.id} className="mb-8">
+              <h3 className="text-lg font-semibold mb-4">{topic.name}</h3>
+              <div className="border rounded-md">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Title</TableHead>
+                      <TableHead>Label</TableHead>
+                      <TableHead>Chapter</TableHead>
+                      <TableHead>Strands</TableHead>
+                      <TableHead>File</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {topic.pages.map((page) => (
+                      <TableRow
+                        key={page.file}
+                        className="cursor-pointer hover:bg-accent/50"
+                        onClick={() => setSelectedPage(page.file)}
+                      >
+                        <TableCell className="font-medium">
+                          {page["chapter-readable"]}
+                        </TableCell>
+                        <TableCell>{page.label}</TableCell>
+                        <TableCell>{page.chapter}</TableCell>
+                        <TableCell>{page.strand.join(", ")}</TableCell>
+                        <TableCell className="text-muted-foreground">
+                          {page.file}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </div>
-            <div className="space-y-2 pl-4">
-              {topic.pages.map((page, pageIndex) => (
-                <div
-                  key={`${topic.id}-${pageIndex}`}
-                  className="p-2 border rounded bg-card hover:bg-accent cursor-pointer"
-                >
-                  {page.label}
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </ScrollArea>
+
+      <PagePreviewDialog
+        isOpen={!!selectedPage}
+        onClose={() => setSelectedPage(null)}
+        pageFile={selectedPage || ""}
+      />
     </div>
   );
 }
