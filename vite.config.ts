@@ -44,11 +44,4 @@ export default defineConfig({
     },
   },
   publicDir: "content",
-  css: {
-    preprocessorOptions: {
-      scss: {
-        implementation: sass,
-      },
-    },
-  },
 });
