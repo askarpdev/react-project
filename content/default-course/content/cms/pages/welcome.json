@@ -8,6 +8,37 @@
   "content": {
     "sections": [
       {
+        "type": "demo",
+        "layout": {
+          "grid": "col-span-12 md:col-span-8 md:col-start-3"
+        },
+        "content": [
+          {
+            "title": "Set Single Strand",
+            "action": "setSingleStrand",
+            "description": "Set role strand to 'manager'",
+            "strand": {
+              "key": "role",
+              "value": "manager"
+            }
+          },
+          {
+            "title": "Set Multiple Strands",
+            "action": "setMultipleStrands",
+            "description": "Set role strand to ['manager', 'admin']",
+            "strand": {
+              "key": "role",
+              "value": ["manager", "admin"]
+            }
+          },
+          {
+            "title": "Clear Strands",
+            "action": "clearStrands",
+            "description": "Remove all strands"
+          }
+        ]
+      },
+      {
         "type": "text",
         "layout": {
           "grid": "col-span-12 md:col-span-8 md:col-start-3"

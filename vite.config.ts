@@ -2,6 +2,7 @@ import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import { tempo } from "tempo-devtools/dist/vite";
+import fs from "fs";
 
 const conditionalPlugins: [string, Record<string, any>][] = [];
 
@@ -17,18 +18,24 @@ export default defineConfig({
     outDir: "dist",
     rollupOptions: {
       input: "./preview.html",
-      output: {
-        entryFileNames: "assets/[name].[hash].js",
-        chunkFileNames: "assets/[name].[hash].js",
-        assetFileNames: "assets/[name].[hash][extname]",
-      },
     },
+    write: true,
   },
   plugins: [
     react({
       plugins: conditionalPlugins,
     }),
     tempo(),
+    {
+      name: "rename-preview-to-index",
+      closeBundle() {
+        const distPath = path.resolve("dist", "preview.html");
+        const indexPath = path.resolve("dist", "index.html");
+        if (fs.existsSync(distPath)) {
+          fs.renameSync(distPath, indexPath);
+        }
+      },
+    },
   ],
   resolve: {
     preserveSymlinks: true,

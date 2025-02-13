@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
+import { StrandingService } from "@/lib/stranding";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
@@ -196,6 +197,39 @@ export default function PageContent({ pageFile }: PageContentProps) {
                           </AccordionItem>
                         ))}
                       </Accordion>
+                    )}
+
+                    {section.type === "demo" && section.content && (
+                      <div className="space-y-4">
+                        {section.content.map((demo: any, i: number) => (
+                          <div key={i} className="flex flex-col gap-2">
+                            <Button
+                              onClick={() => {
+                                switch (demo.action) {
+                                  case "setSingleStrand":
+                                  case "setMultipleStrands":
+                                    if (demo.strand) {
+                                      StrandingService.setStrand(
+                                        demo.strand.key,
+                                        demo.strand.value,
+                                      );
+                                    }
+                                    break;
+                                  case "clearStrands":
+                                    StrandingService.clearStrands();
+                                    break;
+                                }
+                              }}
+                              variant="outline"
+                            >
+                              {demo.title}
+                            </Button>
+                            <p className="text-sm text-muted-foreground">
+                              {demo.description}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
                     )}
 
                     {section.type === "timeline" && section.items && (

@@ -4,10 +4,28 @@ import { ChevronDown } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { loadCourseStructure } from "@/lib/course";
 import { CourseStructure } from "@/types/course";
+import { useStranding } from "@/lib/hooks/useStranding";
+import { StrandingService } from "@/lib/stranding";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 
 export default function Timeline() {
+  const [selectedStrands, setSelectedStrands] = useState<string[]>(() => {
+    const roleStrand = StrandingService.getStrand("role");
+    return roleStrand?.value
+      ? Array.isArray(roleStrand.value)
+        ? roleStrand.value
+        : [roleStrand.value]
+      : [];
+  });
+  const availableStrands = ["A", "B", "C", "D"];
   const [courseStructure, setCourseStructure] =
     useState<CourseStructure | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -50,14 +68,45 @@ export default function Timeline() {
     );
   }
 
+  // Apply stranding logic to filter visible pages
+  const filteredTopics = useStranding(courseStructure?.topics || [], {
+    userStrands: selectedStrands,
+  });
+
   if (loading && !courseStructure) {
     return <div className="p-4">Loading course structure...</div>;
   }
 
   return (
     <div className="flex-1 bg-background h-full">
+      <div className="p-4 border-b">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">Active Strands:</span>
+          <Select
+            value={selectedStrands.join(",")}
+            onValueChange={(value) => {
+              const newStrands = value === "none" ? [] : value.split(",");
+              setSelectedStrands(newStrands);
+              StrandingService.setStrand("role", newStrands);
+            }}
+          >
+            <SelectTrigger className="w-[200px]">
+              <SelectValue placeholder="Select strands" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">None</SelectItem>
+              {availableStrands.map((strand) => (
+                <SelectItem key={strand} value={strand}>
+                  {strand}
+                </SelectItem>
+              ))}
+              <SelectItem value={availableStrands.join(",")}>All</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
       <ScrollArea className="h-full p-4">
-        {courseStructure?.topics.map((topic, index) => (
+        {filteredTopics.map((topic, index) => (
           <div key={topic.id || index} className="mb-6 border rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <h3 className="font-semibold">{topic.name}</h3>
