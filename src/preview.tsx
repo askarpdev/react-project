@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { TempoDevtools } from "tempo-devtools";
-
-if (import.meta.env.VITE_TEMPO === "true") {
-  TempoDevtools.init();
-}
 import "./styles/index.scss";
 import Preview from "./components/CourseBuilder/Preview";
+
+// Only initialize Tempo in development
+if (import.meta.env.DEV) {
+  const { TempoDevtools } = await import("tempo-devtools");
+  TempoDevtools.init();
+}
 
 function PreviewPage() {
   return <Preview />;

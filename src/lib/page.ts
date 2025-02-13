@@ -2,11 +2,19 @@ import { config } from "./config";
 
 export interface PageContent {
   title: string;
+  background?: {
+    type: "image" | "video";
+    url: string;
+    overlay?: boolean;
+  };
   content: {
     sections: Array<{
       type: string;
+      layout?: {
+        grid?: string;
+      };
       title?: string;
-      content?: string;
+      content?: string | string[];
       items?: string[] | Array<{ [key: string]: any }>;
       questions?: Array<{
         question: string;

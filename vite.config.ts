@@ -13,18 +13,15 @@ if (process.env.TEMPO === "true") {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base:
-    process.env.NODE_ENV === "development"
-      ? "/"
-      : process.env.VITE_BASE_PATH || "/",
-  optimizeDeps: {
-    entries: ["src/main.tsx", "src/preview.tsx", "src/tempobook/**/*"],
-  },
+  base: "/",
   build: {
+    outDir: "dist",
     rollupOptions: {
-      input: {
-        main: "./index.html",
-        preview: "./preview.html",
+      input: "./preview.html",
+      output: {
+        entryFileNames: "assets/[name].[hash].js",
+        chunkFileNames: "assets/[name].[hash].js",
+        assetFileNames: "assets/[name].[hash][extname]",
       },
     },
   },
@@ -48,4 +45,11 @@ export default defineConfig({
     },
   },
   publicDir: "content",
+  css: {
+    preprocessorOptions: {
+      scss: {
+        implementation: sass,
+      },
+    },
+  },
 });

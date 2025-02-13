@@ -1,13 +1,24 @@
 {
   "title": "Test Module",
+  "background": {
+    "type": "image",
+    "url": "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=2070&auto=format&fit=crop",
+    "overlay": true
+  },
   "content": {
     "sections": [
       {
         "type": "text",
-        "content": "This is a test module to demonstrate the course content structure and formatting."
+        "layout": {
+          "grid": "col-span-12 md:col-span-8 md:col-start-3"
+        },
+        "content": ["This is a test module to demonstrate the course content structure and formatting.", "Feel free to explore the different sections and interactive elements available in this module."]
       },
       {
         "type": "quiz",
+        "layout": {
+          "grid": "col-span-12"
+        },
         "title": "Quick Check",
         "questions": [
           {
@@ -24,6 +35,9 @@
       },
       {
         "type": "note",
+        "layout": {
+          "grid": "col-span-12 md:col-span-8 md:col-start-3"
+        },
         "content": "This is a sample note section to highlight important information."
       }
     ]
